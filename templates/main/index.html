@@ -1,0 +1,131 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block content %}
+    {% if oxirgi_postlar %}
+        <div class="container content-section align-items-center my-2 d-flex">
+            <div class="d-flex justify-content-between align-items-center text-center">
+                <i class="bi bi-clock-history me-2" style="font-size: 25px"></i>
+                <p class="text-center">{{ "oxirgi qo'shilgan kitoblar"|upper }}</p>
+            </div>
+            <a href="{% url "main:posts" %}" class="link-dark ms-auto">Barchasini ko'rish</a>
+        </div>
+        {% for item in oxirgi_postlar %}
+            <div class="row">
+                <div class="col-2">
+                    {% if item.photo %}
+                        <img src="{{ item.photo.url }}" alt="not found" class="img-fluid">
+                    {% else %}
+                        <img src="{% static "images/not-found.png" %}" alt="not found" class="img-fluid">
+                    {% endif %}
+                </div>
+                <div class="col-9">
+                    <a href="{% url "main:post" item.slug item.id %}"
+                       class="link-primary text-decoration-none d-block">{{ item.title }}</a>
+                    <p class="content d-block">{{ item.short_info }}</p>
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center" style="font-size: 12px;">
+                            <div class="bg-info rounded me-2 px-1 text-white"> {{ item.date.date }}</div>
+                        </div>
+                        <a href="{% url "main:post" item.slug item.id %}" class="text-decoration-none">Batafsil...</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% if muhim %}
+        <div class="container content-section align-items-center my-2 d-flex">
+            <div class="d-flex justify-content-between align-items-center text-center">
+                <i class="bi bi-calendar2-week me-2" style="font-size: 25px"></i>
+                <p class="text-center">{{ sanalar.children.0.category.name|upper }}</p>
+            </div>
+            <a href="{% url "main:list" sanalar.children.0.category.slug sanalar.children.0.category.id %}"
+               class="link-dark ms-auto">Barchasini ko'rish</a>
+        </div>
+        {% for item in muhim %}
+            <div class="row">
+                <div class="col-2">
+                    {% if item.photo %}
+                        <img src="{{ item.photo.url }}" alt="not found" class="img-fluid">
+                    {% else %}
+                        <img src="{% static "images/not-found.png" %}" alt="not found" class="img-fluid">
+                    {% endif %}
+                </div>
+                <div class="col-9">
+                    <a href="{% url "main:post" item.slug item.id %}"
+                       class="link-primary text-decoration-none d-block">{{ item.title }}</a>
+                    <p class="content d-block">{{ item.short_info }}</p>
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center" style="font-size: 12px;">
+                            <div class="bg-info rounded me-2 px-1 text-white"> {{ item.date.date }}</div>
+                        </div>
+                        <a href="{% url "main:post" item.slug item.id %}" class="text-decoration-none">Batafsil...</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% if bayram %}
+        <div class="container content-section align-items-center my-2 d-flex">
+            <div class="d-flex justify-content-between align-items-center text-center">
+                <i class="bi bi-calendar2-day me-2" style="font-size: 25px"></i>
+                <p class="text-center">{{ sanalar.children.1.category.name|upper }}</p>
+            </div>
+            <a href="{% url "main:list" sanalar.children.1.category.slug sanalar.children.1.category.id %}"
+               class="link-dark ms-auto">Barchasini ko'rish</a>
+        </div>
+        {% for item in bayram %}
+            <div class="row">
+                <div class="col-2">
+                    {% if item.photo %}
+                        <img src="{{ item.photo.url }}" alt="not found" class="img-fluid">
+                    {% else %}
+                        <img src="{% static "images/not-found.png" %}" alt="not found" class="img-fluid">
+                    {% endif %}
+                </div>
+                <div class="col-9">
+                    <a href="{% url "main:post" item.slug item.id %}"
+                       class="link-primary text-decoration-none d-block">{{ item.title }}</a>
+                    <p class="content d-block">{{ item.short_info }}</p>
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center" style="font-size: 12px;">
+                            <div class="bg-info rounded me-2 px-1 text-white"> {{ item.date.date }}</div>
+                        </div>
+                        <a href="{% url "main:post" item.slug item.id %}" class="text-decoration-none">Batafsil...</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% if tugilgan_kun %}
+        <div class="container content-section align-items-center my-2 d-flex">
+            <div class="d-flex justify-content-between align-items-center text-center">
+                <i class="bi bi-calendar2-date me-2" style="font-size: 25px"></i>
+                <p class="text-center">{{ sanalar.children.2.category.name|upper }}</p>
+            </div>
+            <a href="{% url "main:list" sanalar.children.2.category.slug sanalar.children.2.category.id %}"
+               class=" link-dark ms-auto">Barchasini ko'rish</a>
+        </div>
+        {% for item in tugilgan_kun %}
+            <div class="row">
+                <div class="col-2">
+                    {% if item.photo %}
+                        <img src="{{ item.photo.url }}" alt="not found" class="img-fluid">
+                    {% else %}
+                        <img src="{% static "images/not-found.png" %}" alt="not found" class="img-fluid">
+                    {% endif %}
+                </div>
+                <div class="col-9">
+                    <a href="{% url "main:post" item.slug item.id %}"
+                       class="link-primary text-decoration-none d-block">{{ item.title }}</a>
+                    <p class="content d-block">{{ item.short_info }}</p>
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center" style="font-size: 12px;">
+                            <div class="bg-info rounded me-2 px-1 text-white"> {{ item.date.date }}</div>
+                        </div>
+                        <a href="{% url "main:post" item.slug item.id %}" class="text-decoration-none">Batafsil...</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

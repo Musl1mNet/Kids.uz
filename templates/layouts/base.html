@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap-icons/font/bootstrap-icons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'main/main.css' %}" rel="stylesheet">
+    <title>Kids.uz</title>
+
+</head>
+<body class="my-4">
+<nav class="navbar navbar-expand-lg my-3">
+    <div class="container rounded ">
+        <a class="navbar-brand text-white" href="{% url 'main:index' %}">Kids.uz</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse p-2 text-white" id="navbarSupportedContent">
+            <form class="d-flex input-group" style="width: 350px" role="search" method="get" action="{% url "main:search" %}">
+                <input class="form-control" type="search" name="q" placeholder="Qirdirish">
+                <button class="btn btn-light bi-search" type="submit"></button>
+            </form>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-white">
+                <li class="nav-item">
+                    <a href="{% url "main:index" %}"
+                       class="nav-link">Bosh sahifa</a>
+                </li>
+                {% for data in categories %}
+                    {% if data.children %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"
+                               href="{% url 'main:list' data.category.slug data.category.id %}" role="button"
+                               data-bs-toggle="dropdown">
+                                {{ data.category.name }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% for child in data.children %}
+                                    <li><a class="dropdown-item"
+                                           href="{% url "main:list" child.category.slug child.category.id %}">{{ child.category.name }}</a>
+                                    </li>
+                                {% endfor %}
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item"
+                                       href="{% url 'main:list' data.category.slug data.category.id %}">Barchasi</a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a href="{% url 'main:list' data.category.slug data.category.id %}"
+                               class="nav-link">{{ data.category.name }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="row g-3">
+        <div class="col-lg-4">
+            <div class="list-group ">
+                {% if sahifalar %}
+                    <li class="list-group-item text-center" style="font-size: 25px">{{ sahifalar.category.name }}</li>
+                    {% if sahifalar.children %}
+                        {% for row in sahifalar.children %}
+                            <a href="{% url 'main:list' row.category.slug row.category.id %}"
+                               class="list-group-item list-group-item-action">{{ row.category.name }}</a>
+                        {% empty %}
+                            <li class="list-group-item cursor-default">Bo'sh</li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item cursor-default">Sahifalar</li>
+                        <li class="list-group-item cursor-default">Bo'sh</li>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-8 section shadow py-2">
+            <div id="carouselExample" class="carousel slide pb-3">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{% static "images/bir.jpg" %}" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{% static "images/ikki.jpg" %}" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                        data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                        data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <div class="row g-3 pb-5 d-flex justify-content-between align-items-center py-2 my-section p-2">
+                {% if sanalar %}
+                    <a href="{% url "main:list" sanalar.children.0.category.slug sanalar.children.0.category.id %}"
+                       class="col-lg-3 btn btn-light shadow d-flex mx-lg-2 my-2 justify-content-center align-items-center text-center">
+                        <i class="bi bi-calendar2-week me-2" style="font-size: 35px"></i>
+                        <p class="d-block">{{ sanalar.children.0.category.name|upper }}</p>
+                    </a>
+                    <a href="{% url "main:list" sanalar.children.1.category.slug sanalar.children.1.category.id %}"
+                       class="col-lg-3 btn btn-light shadow d-flex mx-lg-2 my-2 justify-content-center align-items-center text-center">
+                        <i class="bi bi-calendar2-day me-2" style="font-size: 35px"></i>
+                        <p class="d-block">{{ sanalar.children.1.category.name|upper }}</p>
+                    </a>
+                    <a href="{% url "main:list" sanalar.children.2.category.slug sanalar.children.2.category.id %}"
+                       class="col-lg-3 btn btn-light shadow d-flex mx-lg-2 my-2 justify-content-center align-items-center text-center">
+                        <i class="bi bi-calendar2-date me-2" style="font-size: 35px"></i>
+                        <p class="d-block">{{ sanalar.children.2.category.name|upper }}</p>
+                    </a>
+                {% endif %}
+                {% if date %}
+                    <div class="container" style="background-color: wheat">
+                        <p style="font-size: 55px">{{ "Bugun:"|upper }} {{ date }}</p>
+                    </div>
+                {% endif %}
+            </div>
+            {% if breadcrumb %}
+                <div class="container pt-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a
+                                    href="{% url 'main:index' %}">Bosh sahifa</a>
+                            </li>
+                            {% for b in breadcrumb %}
+                                {% if b.url %}
+                                    <li class="breadcrumb-item"><a href="{{ b.url }}">{{ b.title }}</a></li>
+                                {% else %}
+                                    <li class="breadcrumb-item active" aria-current="page">{{ b.title }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ol>
+                    </nav>
+                </div>
+            {% endif %}
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+<script src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+
+</body>
+</html>

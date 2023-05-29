@@ -1,0 +1,53 @@
+@import "bootstrap";
+
+body {
+  background-color: #dcdde1;
+  background-image: url("../images/background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.navbar > .container {
+  background-color: #e1b12c;
+}
+
+.nav-link {
+  color: white;
+}
+
+.nav-link:active {
+  color: white;
+}
+
+.nav-link:hover {
+  color: white;
+}
+
+.list-group > .list-group-item {
+  background-color: #487eb0;
+  color: white;
+}
+p{
+  margin: 0 0 0 0;
+}
+.section{
+  background-color: #f5f6fa;
+}
+.my-section{
+  background-color: #dcdde1;
+}
+
+.content-section{
+  background-color: #e7e7ee;
+}
+.card-header{
+  background-color: #c0eaf8;
+}
+.my-btn{
+  background-color: #487eb0;
+}
+.my-btn:hover{
+    background-color: #2a5d88 !important;
+}
+/*# sourceMappingURL=main.css.map */

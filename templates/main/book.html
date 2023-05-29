@@ -1,0 +1,116 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="container pt-3">
+        <div class="card border-1 border-info">
+            <div class="card-header d-flex ">
+                <h4>{{ object.title }}</h4>
+                <div class="btn-group ms-auto" role="group">
+                    <a href="#" class="btn btn-success"><i class="bi bi-hand-thumbs-up"></i> {{ object.like }}
+                    </a>
+                    <a href="#" class="btn btn-danger"><i
+                            class="bi bi-hand-thumbs-up"></i> {{ object.dislike }}</a>
+                </div>
+            </div>
+            <div class="card-body">
+                {% if object.is_audio %}
+                    <div class="d-flex justify-content-center align-items-center mb-2">
+                        {% if object.file %}
+                            <audio controls>
+                                <source src="{{ object.file.url }}" type="audio/ogg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        {% endif %}
+                    </div>
+                {% elif object.is_video %}
+                    <div class="d-flex justify-content-center align-items-center mb-2">
+                        {% if object.file %}
+                            <video width="320" height="240" controls>
+                                <source src="{{ object.file.url }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <div class="d-flex justify-content-center align-items-center mb-2">
+                        {% if object.photo %}
+                            <div class="img"
+                                 style="background: url('{{ object.photo.url }}') no-repeat center; background-size: cover; width: 200px; height: 150px;">
+                            </div>
+                        {% else %}
+                            <div style="background: url('{% static 'images/not-found.png' %}') no-repeat center; background-size: cover; width: 200px; height: 150px;"
+                                 class="img">
+                            </div>
+                        {% endif %}
+                    </div>
+
+                {% endif %}
+                <h5 class="card-title">{{ object.title }}</h5>
+                <p class="card-text">{{ object.content }}</p>
+            </div>
+            <div class="card-footer d-flex" style="font-size: 10px">
+                <div class="bg-info rounded text-white d-flex p-1">
+                    <i class="bi bi-clock-history me-1"></i>
+                    <p class="">{{ object.date.date }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="card my-2">
+            <div class="card-header">
+                <h5>Post fayllari</h5>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Fayl nomi</th>
+                        <th scope="col">O'lchami</th>
+                        <th scope="col">Yuklash</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if object.file %}
+                        <tr>
+                            <th scope="row">{{ filenomi }}</th>
+                            <td>{{ fileolchami }} MB</td>
+                            <td class="d-flex justify-content-center align-items-center"><a
+                                    href="{% url "main:file_download" object.id %}"
+                                    class="ms-auto btn my-btn text-decoration-none text-white">Yuklash</a></td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <th>File topilmadi!</th>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        <div class="container mt-4">
+            <h4>O'xshash Postlar</h4>
+            {% for row in similar %}
+                <div class="row">
+                    <div class="col-2">
+                        {% if row.photo %}
+                            <img src="{{ row.photo.url }}" alt="not found" class="img-fluid">
+                        {% else %}
+                            <img src="{% static "images/not-found.png" %}" alt="not found" class="img-fluid">
+                        {% endif %}
+                    </div>
+                    <div class="col-9">
+                        <a href="{% url "main:post" row.slug row.id %}"
+                           class="link-primary text-decoration-none d-block">{{ row.title }}</a>
+                        <p class="content d-block">{{ row.short_info }}</p>
+                        <div class="d-flex">
+                            <div class="mx-2 bg-info text-white">{{ row.date.date }}</div>
+                            <a href="{% url "main:post" row.slug row.id %}" class="text-decoration-none">Batafsil...</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
